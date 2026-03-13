@@ -1,3 +1,9 @@
+vim.filetype.add {
+  extension = {
+    pl = "prolog",
+  },
+}
+
 return {
   "AstroNvim/astrocore",
   ---@type AstroCoreOpts
@@ -10,6 +16,8 @@ return {
         -- JavaScript mappings
         ["<Leader>js"] = { desc = "JavaScript" },
         ["<Leader>jsr"] = { function() vim.cmd "!node %" end, desc = "Run current JavaScript file" },
+        -- Plugins group
+        ["<Leader>P"] = { desc = "🔌Plugins" },
       },
     },
   },

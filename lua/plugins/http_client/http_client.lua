@@ -1,4 +1,4 @@
--- ~/.config/nvim/lua/plugins/http_client/init.lua
+-- ~/.config/nvim/lua/plugins/http_client/http_client.lua
 -- Plugin spec for the HTTP client (IntelliJ-style .http files)
 return {
   {
