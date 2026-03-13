@@ -1,17 +1,16 @@
--- ~/.config/nvim/lua/plugins/lang_keymaps.lua
-local wk = require "which-key"
-
--- Corrected mappings
-local mappings = {
-  j = {
-    name = "Java", -- A descriptive group name
-    r = { function() vim.cmd "!java %" end, "Run current Java file" },
-  },
-  js = {
-    name = "JavaScript", -- A descriptive group name
-    r = { function() vim.cmd "!node %" end, "Run current JavaScript file" },
+return {
+  "AstroNvim/astrocore",
+  ---@type AstroCoreOpts
+  opts = {
+    mappings = {
+      n = {
+        -- Java mappings
+        ["<Leader>j"] = { desc = "☕Java/JavaScript" },
+        ["<Leader>jr"] = { function() vim.cmd "!java %" end, desc = "Run current Java file" },
+        -- JavaScript mappings
+        ["<Leader>js"] = { desc = "JavaScript" },
+        ["<Leader>jsr"] = { function() vim.cmd "!node %" end, desc = "Run current JavaScript file" },
+      },
+    },
   },
 }
-
--- Register the corrected mappings
-wk.register(mappings, { prefix = "<leader>", mode = "n" })

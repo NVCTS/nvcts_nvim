@@ -1,0 +1,47 @@
+### get users
+GET https://jsonplaceholder.typicode.com/users
+
+### get single user
+GET https://jsonplaceholder.typicode.com/users/1
+
+### get user posts
+GET https://jsonplaceholder.typicode.com/posts?userId=1
+
+### create post
+POST https://jsonplaceholder.typicode.com/posts
+Content-Type: application/json
+
+{
+  "title": "Hello from Neovim",
+  "body": "This post was sent from the http_client plugin",
+  "userId": 1
+}
+
+### update post
+PUT https://jsonplaceholder.typicode.com/posts/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "Updated from Neovim",
+  "body": "This post was updated via PUT",
+  "userId": 1
+}
+
+### patch post title
+PATCH https://jsonplaceholder.typicode.com/posts/1
+Content-Type: application/json
+
+{
+  "title": "Patched title"
+}
+
+### delete post
+DELETE https://jsonplaceholder.typicode.com/posts/1
+
+### get html page
+GET https://jsonplaceholder.typicode.com
+
+### with variables
+GET {{host}}/users/{{userId}}
+Accept: application/json
