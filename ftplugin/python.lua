@@ -49,6 +49,6 @@ vim.keymap.set({'n'}, '<A-p>', '', {
 })
 
 vim.keymap.set("n", "<Leader>Pp", run_python_with_params, {
-  desc = "[P]ython: run file with parameters",
+  desc = "[p]ython: run file with parameters",
   buffer = 0,
 })
