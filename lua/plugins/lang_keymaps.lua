@@ -18,6 +18,7 @@ return {
         ["<Leader>jsr"] = { function() vim.cmd "!node %" end, desc = "Run current JavaScript file" },
         -- Plugins group
         ["<Leader>P"] = { desc = "🔌Plugins" },
+        ["<Leader>Pn"] = { function() require("user.stickynote").toggle() end, desc = "Sticky [N]ote" },
       },
     },
   },
