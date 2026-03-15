@@ -23,3 +23,7 @@ vim.keymap.set("n", "<Leader>Pp", load_prolog_file, {
   desc = "[P]rolog: load file in swipl",
   buffer = 0,
 })
+vim.keymap.set("n", "<A-x>", load_prolog_file, {
+  desc = "[P]rolog: load file in swipl",
+  buffer = 0,
+})
