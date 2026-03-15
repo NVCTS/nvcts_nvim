@@ -3,7 +3,13 @@ return {
 
   -- == Examples of Adding Plugins ==
 
-  "andweeb/presence.nvim",
+
+  {
+    "lewis6991/gitsigns.nvim",
+    opts = {
+      current_line_blame = true,
+    },
+  },
   {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",

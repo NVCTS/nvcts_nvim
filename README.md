@@ -1,34 +1,41 @@
-# AstroNvim Template
+# Neovim Config
 
-**NOTE:** This is for AstroNvim v4+
+Personal Neovim configuration built on [AstroNvim v4](https://github.com/AstroNvim/AstroNvim) with [lazy.nvim](https://github.com/folke/lazy.nvim).
 
-A template for getting started with [AstroNvim](https://github.com/AstroNvim/AstroNvim)
+## Structure
 
-## 🛠️ Installation
-
-#### Make a backup of your current nvim and shared folder
-
-```shell
-mv ~/.config/nvim ~/.config/nvim.bak
-mv ~/.local/share/nvim ~/.local/share/nvim.bak
-mv ~/.local/state/nvim ~/.local/state/nvim.bak
-mv ~/.cache/nvim ~/.cache/nvim.bak
+```
+lua/
+  lazy_setup.lua        -- lazy.nvim bootstrap, loads AstroNvim + plugins
+  community.lua         -- AstroCommunity imports (Lua pack, Monokai Pro)
+  polish.lua            -- Post-setup hooks
+  plugins/              -- Plugin specs
+  user/                 -- Custom modules (http client, sticky notes, etc.)
+ftplugin/               -- Filetype-specific settings (Python, Prolog)
+syntax/                 -- Custom syntax files (HTTP)
 ```
 
-#### Create a new user repository from this template
+## Notable Customizations
 
-Press the "Use this template" button above to create a new repository to store your user configuration.
+Most AstroNvim defaults are kept as-is. Customization is focused on:
 
-You can also just clone this repository directly if you do not want to track your user configuration in GitHub.
+- **Theme:** Monokai Pro (with a configured but inactive Catppuccin Mocha setup)
+- **HTTP Client:** IntelliJ-style `.http` file runner with environment variables, curl execution, and `jq` formatting
+- **Sticky Notes:** Floating window note system with tabs, todo checkboxes, and JSON persistence
+- **Yank History:** Enhanced yank ring via yanky.nvim with a Telescope picker and in-prompt commands
+- **Language runners** (`<Leader>Pp` / `<Alt-x>`): Python, JavaScript, Prolog
 
-#### Clone the repository
+## Key Bindings
 
-```shell
-git clone https://github.com/<your_user>/<your_repository> ~/.config/nvim
-```
+Leader: `<Space>` | Local leader: `,`
 
-#### Start Neovim
-
-```shell
-nvim
-```
+| Binding | Description |
+|---|---|
+| `<Leader>rr` | Run HTTP request under cursor (`.http` files) |
+| `<Leader>re` | Run HTTP request with environment prompt |
+| `<Leader>Pn` | Toggle sticky note window |
+| `<Leader>fy` / `<Leader>Py` | Open yank history (Telescope) |
+| `<Leader>tl` / `<Alt-t>` | Floating terminal in current file's directory |
+| `<Leader>jr` | Run current Java file |
+| `<Leader>jsr` | Run current JS file |
+| `<Leader>Pp` / `<Alt-x>` | Run file (Python, JavaScript, Prolog) |

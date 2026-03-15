@@ -82,7 +82,16 @@ return {
   {
     "gbprod/yanky.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" },
-    event = "User AstroFile",
+    keys = {
+      { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
+      { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put after cursor" },
+      { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put before cursor" },
+      { "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "Put after selection" },
+      { "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "Put before selection" },
+      { "[y", "<Plug>(YankyCycleForward)", desc = "Cycle yank forward" },
+      { "]y", "<Plug>(YankyCycleBackward)", desc = "Cycle yank backward" },
+    },
+    cmd = { "YankHistoryClear" },
     opts = {
       ring = {
         history_length = 10, -- number of yanks to keep in history
@@ -111,6 +120,10 @@ return {
           ["<Leader>fy"] = {
             open_yank_history,
             desc = "Find yank history",
+          },
+          ["<Leader>Py"] = {
+            open_yank_history,
+            desc = "Yank history",
           },
         },
       },
