@@ -12,6 +12,22 @@ return {
 
   { import = "astrocommunity.editing-support.conform-nvim" },
   { import = "astrocommunity.lsp.nvim-lint" },
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters = {
+        selene = {
+          args = {
+            "--display-style",
+            "json",
+            "--config",
+            vim.fn.stdpath "config" .. "/selene.toml",
+            "-",
+          },
+        },
+      },
+    },
+  },
   { import = "astrocommunity.utility.noice-nvim" },
   { import = "astrocommunity.git.diffview-nvim" },
   { import = "astrocommunity.test.neotest" },

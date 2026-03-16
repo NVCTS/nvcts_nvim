@@ -62,6 +62,55 @@ return {
         -- this is useful for naming menus
         -- ["<Leader>b"] = { desc = "Buffers" },
 
+        -- Diagnostic navigation mode
+        -- Press <Leader>de or <Leader>dw to enter diagnostic mode,
+        -- then use n/N to jump forward/backward. <Esc> to exit.
+        ["<Leader>d"] = { desc = "Diagnostics" },
+        ["<Leader>de"] = {
+          function()
+            local severity = { severity = vim.diagnostic.severity.ERROR }
+            local diags = vim.diagnostic.get(0, severity)
+            if #diags == 0 then
+              vim.notify("No errors in this buffer", vim.log.levels.INFO)
+              return
+            end
+            vim.diagnostic.goto_next(severity)
+            vim.notify("Diagnostic mode (errors): n/N to navigate, <Esc> to exit", vim.log.levels.INFO)
+            vim.keymap.set("n", "n", function() vim.diagnostic.goto_next(severity) end, { buffer = true, desc = "Next error" })
+            vim.keymap.set("n", "N", function() vim.diagnostic.goto_prev(severity) end, { buffer = true, desc = "Prev error" })
+            local function exit()
+              pcall(vim.keymap.del, "n", "n", { buffer = true })
+              pcall(vim.keymap.del, "n", "N", { buffer = true })
+              pcall(vim.keymap.del, "n", "<Esc>", { buffer = true })
+              vim.notify("Exited diagnostic mode", vim.log.levels.INFO)
+            end
+            vim.keymap.set("n", "<Esc>", exit, { buffer = true, desc = "Exit diagnostic mode" })
+          end,
+          desc = "Navigate errors (n/N mode)",
+        },
+        ["<Leader>dw"] = {
+          function()
+            local severity = { severity = { min = vim.diagnostic.severity.WARN } }
+            local diags = vim.diagnostic.get(0, severity)
+            if #diags == 0 then
+              vim.notify("No warnings or errors in this buffer", vim.log.levels.INFO)
+              return
+            end
+            vim.diagnostic.goto_next(severity)
+            vim.notify("Diagnostic mode (warn+error): n/N to navigate, <Esc> to exit", vim.log.levels.INFO)
+            vim.keymap.set("n", "n", function() vim.diagnostic.goto_next(severity) end, { buffer = true, desc = "Next warning/error" })
+            vim.keymap.set("n", "N", function() vim.diagnostic.goto_prev(severity) end, { buffer = true, desc = "Prev warning/error" })
+            local function exit()
+              pcall(vim.keymap.del, "n", "n", { buffer = true })
+              pcall(vim.keymap.del, "n", "N", { buffer = true })
+              pcall(vim.keymap.del, "n", "<Esc>", { buffer = true })
+              vim.notify("Exited diagnostic mode", vim.log.levels.INFO)
+            end
+            vim.keymap.set("n", "<Esc>", exit, { buffer = true, desc = "Exit diagnostic mode" })
+          end,
+          desc = "Navigate warnings+errors (n/N mode)",
+        },
+
         -- setting a mapping to false will disable it
         -- ["<C-S>"] = false,
       },
