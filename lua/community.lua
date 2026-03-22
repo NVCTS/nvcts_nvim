@@ -7,6 +7,12 @@ return {
   "AstroNvim/astrocommunity",
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.colorscheme.monokai-pro-nvim" },
+  {
+    "loctvl842/monokai-pro.nvim",
+    opts = {
+      transparent_background = true,
+    },
+  },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
   { import = "astrocommunity.motion.flash-nvim" },
 
@@ -29,6 +35,12 @@ return {
     },
   },
   { import = "astrocommunity.utility.noice-nvim" },
+  {
+    "rcarriga/nvim-notify",
+    opts = {
+      background_colour = "#000000",
+    },
+  },
   { import = "astrocommunity.git.diffview-nvim" },
   { import = "astrocommunity.test.neotest" },
 
