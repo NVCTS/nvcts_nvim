@@ -16,6 +16,8 @@ return {
         -- JavaScript mappings
         ["<Leader>js"] = { desc = "JavaScript" },
         ["<Leader>jsr"] = { function() vim.cmd "!node %" end, desc = "Run current JavaScript file" },
+        -- HTTP client group
+        ["<Leader>H"] = { desc = "🌐HTTP Client" },
         -- Plugins group
         ["<Leader>P"] = { desc = "🔌Plugins" },
         ["<Leader>Pn"] = { function() require("user.stickynote").toggle() end, desc = "Sticky [N]ote" },

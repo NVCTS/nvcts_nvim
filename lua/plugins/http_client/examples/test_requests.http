@@ -1,47 +1,171 @@
+### ===========================
+### kulala.nvim example requests
+### ===========================
+
+### -------------------------
+### Basic CRUD operations
+### -------------------------
+
+@userId = 9
+@host = https://jsonplaceholder.typicode.com
+
+
 ### get users
-GET https://jsonplaceholder.typicode.com/users
+GET {{host}}/users HTTP/1.1
+Accept: application/json
+
+###
 
 ### get single user
-GET https://jsonplaceholder.typicode.com/users/1
+GET {{host}}/users/{{userId}} HTTP/1.1
+Accept: application/json
 
-### get user posts
-GET https://jsonplaceholder.typicode.com/posts?userId=1
+###
 
 ### create post
-POST https://jsonplaceholder.typicode.com/posts
+POST {{host}}/posts HTTP/1.1
 Content-Type: application/json
+Accept: application/json
 
 {
-  "title": "Hello from Neovim",
-  "body": "This post was sent from the http_client plugin",
-  "userId": 1
+  "title": "Hello from kulala.nvim",
+  "body": "This post was sent from Neovim",
+  "userId": {{userId}}
 }
 
+###
+
 ### update post
-PUT https://jsonplaceholder.typicode.com/posts/1
+PUT {{host}}/posts/1 HTTP/1.1
 Content-Type: application/json
+Accept: application/json
 
 {
   "id": 1,
-  "title": "Updated from Neovim",
+  "title": "Updated from kulala.nvim",
   "body": "This post was updated via PUT",
-  "userId": 1
+  "userId": {{userId}}
 }
 
+###
+
 ### patch post title
-PATCH https://jsonplaceholder.typicode.com/posts/1
+PATCH {{host}}/posts/1 HTTP/1.1
 Content-Type: application/json
 
 {
   "title": "Patched title"
 }
 
+###
+
 ### delete post
-DELETE https://jsonplaceholder.typicode.com/posts/1
+DELETE {{host}}/posts/1 HTTP/1.1
 
-### get html page
-GET https://jsonplaceholder.typicode.com
+###
 
-### with variables
-GET {{host}}/users/{{userId}}
+### -------------------------
+### Response chaining
+### -------------------------
+### Grab data from one response and use it in the next request.
+### kulala supports JSONPath via {{request_name.response.body.$.path}}.
+
+### get_first_user
+GET {{host}}/users/1 HTTP/1.1
 Accept: application/json
+
+###
+
+### get posts by first user (chained)
+# Uses the username from the previous response
+GET {{host}}/posts?userId={{get_first_user.response.body.$.id}} HTTP/1.1
+Accept: application/json
+
+###
+
+### -------------------------
+### Pre-request scripts
+### -------------------------
+### Run JavaScript before a request to set dynamic variables.
+
+### dynamic post with timestamp
+< {%
+  var crypto = require('crypto');
+  request.variables.set('NONCE', crypto.randomBytes(8).toString('hex'));
+  request.variables.set('TIMESTAMP', Date.now().toString());
+%}
+POST {{host}}/posts HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Dynamic post {{NONCE}}",
+  "body": "Created at {{TIMESTAMP}}",
+  "userId": {{userId}}
+}
+
+###
+
+### -------------------------
+### Post-request scripts
+### -------------------------
+### Run JavaScript after a response to extract and store values.
+
+### login (simulated)
+POST {{host}}/posts HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "demo_user",
+  "password": "secret"
+}
+
+> {%
+  // Store the response id as a global variable for subsequent requests
+  client.global.set('AUTH_POST_ID', response.body.id);
+%}
+
+###
+
+### use stored global
+# Uses the AUTH_POST_ID set by the post-request script above
+GET {{host}}/posts/{{AUTH_POST_ID}} HTTP/1.1
+Accept: application/json
+
+###
+
+### -------------------------
+### Headers & auth patterns
+### -------------------------
+
+### bearer token auth
+GET {{host}}/posts HTTP/1.1
+Accept: application/json
+Authorization: Bearer {{apiToken}}
+
+###
+
+### custom headers
+GET {{host}}/posts HTTP/1.1
+Accept: application/json
+X-Request-ID: kulala-{{userId}}
+X-Custom-Header: neovim
+
+###
+
+### -------------------------
+### Inspect & copy
+### -------------------------
+### Use <leader>Ri to inspect the generated curl command for any request.
+### Use <leader>Rc to copy it as a curl command to clipboard.
+
+### inspectable request
+POST {{host}}/posts HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{apiToken}}
+
+{
+  "title": "Inspect me with <leader>Ri",
+  "body": "Or copy as cURL with <leader>Rc",
+  "userId": {{userId}}
+}

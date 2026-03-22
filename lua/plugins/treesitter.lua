@@ -9,5 +9,8 @@ return {
       "vim",
       "prolog",
     },
+    highlight = {
+      disable = { "http", "rest", "kulala_http" },
+    },
   },
 }
